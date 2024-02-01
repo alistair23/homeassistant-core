@@ -113,7 +113,7 @@ class AutomowerLawnMower(HusqvarnaAutomowerBleEntity, LawnMowerEntity):
         """Start mowing."""
         _LOGGER.debug("Starting mower")
 
-        if not await self.coordinator.mower.is_connected():
+        if not self.coordinator.mower.is_connected():
             device = bluetooth.async_ble_device_from_address(
                 self.coordinator.hass, self.coordinator.address, connectable=True
             )
@@ -132,7 +132,7 @@ class AutomowerLawnMower(HusqvarnaAutomowerBleEntity, LawnMowerEntity):
         """Start docking."""
         _LOGGER.debug("Start docking")
 
-        if not await self.coordinator.mower.is_connected():
+        if not self.coordinator.mower.is_connected():
             device = bluetooth.async_ble_device_from_address(
                 self.coordinator.hass, self.coordinator.address, connectable=True
             )
@@ -149,7 +149,7 @@ class AutomowerLawnMower(HusqvarnaAutomowerBleEntity, LawnMowerEntity):
         """Pause mower."""
         _LOGGER.debug("Pausing mower")
 
-        if not await self.coordinator.mower.is_connected():
+        if not self.coordinator.mower.is_connected():
             device = bluetooth.async_ble_device_from_address(
                 self.coordinator.hass, self.coordinator.address, connectable=True
             )
