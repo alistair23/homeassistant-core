@@ -76,6 +76,15 @@ class AutomowerLawnMower(HusqvarnaAutomowerBleEntity, LawnMowerEntity):
         state = str(self.coordinator.data["state"])
         activity = str(self.coordinator.data["activity"])
 
+        _LOGGER.debug("mower state = " + state)
+        _LOGGER.debug("mower activity = " + activity)
+
+        state = state[state.find('.')+1:].lower()
+        activity = activity[activity.find('.')+1:].lower()
+
+        _LOGGER.debug("mower (fixed) state = " + state)
+        _LOGGER.debug("mower (fixed) activity = " + activity)
+
         if state is None:
             return None
 
@@ -90,13 +99,14 @@ class AutomowerLawnMower(HusqvarnaAutomowerBleEntity, LawnMowerEntity):
         if state in (
             "restricted",
             "inOperation",
+            "in_operation",
             "unknown",
             "checkSafety",
             "pendingStart",
         ):
             if activity in ("charging", "parked", "none"):
                 return LawnMowerActivity.DOCKED
-            if activity in ("goingOut", "mowing", "goingHome"):
+            if activity in ("goingOut", "mowing", "goingHome", "going_home"):
                 return LawnMowerActivity.MOWING
         return LawnMowerActivity.ERROR
 
