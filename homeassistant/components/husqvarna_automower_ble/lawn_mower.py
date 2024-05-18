@@ -221,6 +221,6 @@ class MowerNextStart(HusqvarnaAutomowerBleEntity, SensorEntity):
         """Handle updated data from the coordinator."""
         _LOGGER.debug("MowerNextStart: _handle_coordinator_update")
 
-        self._attr_native_value = int(self.coordinator.data["next_start"])
+        self._attr_native_value = int(self.coordinator.data["next_start_time"])
         self._attr_available = self._attr_native_value is not None
         self.async_write_ha_state()

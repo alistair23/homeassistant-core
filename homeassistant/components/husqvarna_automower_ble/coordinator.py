@@ -97,8 +97,8 @@ class Coordinator(DataUpdateCoordinator[dict[str, bytes]]):
                 await self._async_find_device()
                 raise UpdateFailed("Error getting data from device")
 
-            data["next_start"] = await self.mower.next_start()
-            _LOGGER.debug(data["next_start"])
+            data["next_start_time"] = await self.mower.next_start()
+            _LOGGER.debug(data["next_start_time"])
             if data["next_start"] is None:
                 await self._async_find_device()
                 raise UpdateFailed("Error getting data from device")
