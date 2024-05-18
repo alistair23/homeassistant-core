@@ -198,3 +198,29 @@ class BatterySensor(HusqvarnaAutomowerBleEntity, SensorEntity):
         self._attr_native_value = int(self.coordinator.data["battery_level"])
         self._attr_available = self._attr_native_value is not None
         self.async_write_ha_state()
+
+class MowerNextStart(HusqvarnaAutomowerBleEntity, SensorEntity):
+    """Husqvarna Automower Next Start Time"""
+
+    _attr_device_class = SensorDeviceClass.TIMESTAMP
+    _attr_native_unit_of_measurement = None
+
+    def __init__(
+        self,
+        coordinator: Coordinator,
+        unique_id: str,
+        name: str,
+    ) -> None:
+        """Initialize the lawn mower."""
+        super().__init__(coordinator)
+        self._attr_name = name
+        self._attr_unique_id = unique_id
+
+    @callback
+    def _handle_coordinator_update(self) -> None:
+        """Handle updated data from the coordinator."""
+        _LOGGER.debug("MowerNextStart: _handle_coordinator_update")
+
+        self._attr_native_value = int(self.coordinator.data["next_start"])
+        self._attr_available = self._attr_native_value is not None
+        self.async_write_ha_state()
