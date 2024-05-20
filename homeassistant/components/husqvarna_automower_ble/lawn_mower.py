@@ -228,8 +228,11 @@ class MowerNextStart(HusqvarnaAutomowerBleEntity, SensorEntity):
         """Handle updated data from the coordinator."""
         _LOGGER.debug("MowerNextStart: _handle_coordinator_update")
 
-        self.retrieve_value = str(self.coordinator.data["next_start_time"])
-        if self.retrieve_value not None:
-            self._attr_native_value = datetime.strptime(self.retrieve_value, '%Y-%m-%d %H:%M:%S%z')
-        self._attr_available = self._attr_native_value is not None
-        self.async_write_ha_state()
+        self.retrieve_value = self.coordinator.data["next_start_time"]
+        _LOGGER.debug("MowerNextStart result: " + str(self.retrieve_value))
+        if self.retrieve_value is None:
+            _LOGGER.debug("skipping as returned none")
+        else:
+            self._attr_native_value = datetime.strptime(str(self.retrieve_value), '%Y-%m-%d %H:%M:%S%z')
+            self._attr_available = self._attr_native_value is not None
+            self.async_write_ha_state()
