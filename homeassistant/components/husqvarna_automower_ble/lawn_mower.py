@@ -54,6 +54,41 @@ async def async_setup_entry(
                 "automower" + model + "_" + address + "_next_start_time",
                 "Next Start Time",
             ),
+            MowerTotalRunningTime(
+                coordinator,
+                "automower" + model + "_" + address + "_total_running_time",
+                "Total Running Time",
+            ),
+            MowerTotalCuttingTime(
+                coordinator,
+                "automower" + model + "_" + address + "_total_cutting_time",
+                "Total Cutting Time",
+            ),
+            MowerTotalChargingTime(
+                coordinator,
+                "automower" + model + "_" + address + "_total_charging_time",
+                "Total Charging Time",
+            ),
+            MowerTotalSearchingTime(
+                coordinator,
+                "automower" + model + "_" + address + "_total_searching_time",
+                "Total Searching Time",
+            ),
+            MowerNumberOfCollisions(
+                coordinator,
+                "automower" + model + "_" + address + "_number_of_collisions",
+                "Number of Collisions",
+            ),
+            MowerNumberOfChargingCycles(
+                coordinator,
+                "automower" + model + "_" + address + "_number_of_charging_cycles",
+                "Number of Charging Cycles",
+            ),
+            MowerCuttingBladeUsageTime(
+                coordinator,
+                "automower" + model + "_" + address + "_cutting_blade_usage_time",
+                "Cutting blade Usage time",
+            ),
         ]
     )
 
