@@ -16,6 +16,8 @@ from homeassistant.const import PERCENTAGE
 from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
+from datetime import datetime
+
 from .const import DOMAIN
 from .coordinator import Coordinator, HusqvarnaAutomowerBleEntity
 
@@ -226,6 +228,6 @@ class MowerNextStart(HusqvarnaAutomowerBleEntity, SensorEntity):
         """Handle updated data from the coordinator."""
         _LOGGER.debug("MowerNextStart: _handle_coordinator_update")
 
-        self._attr_native_value = str(self.coordinator.data["next_start_time"])
+        self._attr_native_value = datetime.strptime(self.coordinator.data["next_start_time"], '%Y-%m-%dT%H:%M:%S%z')
         self._attr_available = self._attr_native_value is not None
         self.async_write_ha_state()
