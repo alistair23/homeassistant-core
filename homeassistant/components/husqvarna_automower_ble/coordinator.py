@@ -100,6 +100,9 @@ class Coordinator(DataUpdateCoordinator[dict[str, bytes]]):
             data["next_start_time"] = await self.mower.mower_next_start_time()
             _LOGGER.debug("next_start_time: " + data["next_start_time"])
 
+            data["statuses"] = await self.mower.get_parameter("getStatuses")
+            _LOGGER.debug("statuses: " + str(data["statuses"])
+
         except BleakError as err:
             _LOGGER.error("Error getting data from device")
             await self._async_find_device()
