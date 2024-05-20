@@ -47,6 +47,11 @@ async def async_setup_entry(
                 "automower" + model + "_" + address + "_battery_level",
                 "Battery Level",
             ),
+            MowerNextStart(
+                coordinator,
+                "automower" + model + "_" + address + "_next_start_time",
+                "Next Start Time",
+            ),
         ]
     )
 
@@ -221,6 +226,6 @@ class MowerNextStart(HusqvarnaAutomowerBleEntity, SensorEntity):
         """Handle updated data from the coordinator."""
         _LOGGER.debug("MowerNextStart: _handle_coordinator_update")
 
-        self._attr_native_value = int(self.coordinator.data["next_start_time"])
+        self._attr_native_value = str(self.coordinator.data["next_start_time"])
         self._attr_available = self._attr_native_value is not None
         self.async_write_ha_state()
