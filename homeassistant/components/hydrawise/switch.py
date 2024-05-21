@@ -1,32 +1,23 @@
 """Support for Hydrawise cloud switches."""
+
 from __future__ import annotations
 
 from datetime import timedelta
 from typing import Any
 
 from pydrawise.schema import Zone
-import voluptuous as vol
 
 from homeassistant.components.switch import (
-    PLATFORM_SCHEMA,
     SwitchDeviceClass,
     SwitchEntity,
     SwitchEntityDescription,
 )
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.const import CONF_MONITORED_CONDITIONS
 from homeassistant.core import HomeAssistant
-import homeassistant.helpers.config_validation as cv
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
-from homeassistant.helpers.typing import ConfigType, DiscoveryInfoType
 from homeassistant.util import dt as dt_util
 
-from .const import (
-    ALLOWED_WATERING_TIME,
-    CONF_WATERING_TIME,
-    DEFAULT_WATERING_TIME,
-    DOMAIN,
-)
+from .const import DEFAULT_WATERING_TIME, DOMAIN
 from .coordinator import HydrawiseDataUpdateCoordinator
 from .entity import HydrawiseEntity
 
@@ -45,30 +36,6 @@ SWITCH_TYPES: tuple[SwitchEntityDescription, ...] = (
 
 SWITCH_KEYS: list[str] = [desc.key for desc in SWITCH_TYPES]
 
-# Deprecated since Home Assistant 2023.10.0
-# Can be removed completely in 2024.4.0
-PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
-    {
-        vol.Optional(CONF_MONITORED_CONDITIONS, default=SWITCH_KEYS): vol.All(
-            cv.ensure_list, [vol.In(SWITCH_KEYS)]
-        ),
-        vol.Optional(CONF_WATERING_TIME, default=DEFAULT_WATERING_TIME): vol.All(
-            vol.In(ALLOWED_WATERING_TIME)
-        ),
-    }
-)
-
-
-def setup_platform(
-    hass: HomeAssistant,
-    config: ConfigType,
-    add_entities: AddEntitiesCallback,
-    discovery_info: DiscoveryInfoType | None = None,
-) -> None:
-    """Set up a sensor for a Hydrawise device."""
-    # We don't need to trigger import flow from here as it's triggered from `__init__.py`
-    return  # pragma: no cover
-
 
 async def async_setup_entry(
     hass: HomeAssistant,
@@ -81,7 +48,7 @@ async def async_setup_entry(
     ]
     async_add_entities(
         HydrawiseSwitch(coordinator, description, controller, zone)
-        for controller in coordinator.data.controllers
+        for controller in coordinator.data.controllers.values()
         for zone in controller.zones
         for description in SWITCH_TYPES
     )
@@ -96,7 +63,7 @@ class HydrawiseSwitch(HydrawiseEntity, SwitchEntity):
         """Turn the device on."""
         if self.entity_description.key == "manual_watering":
             await self.coordinator.api.start_zone(
-                self.zone, custom_run_duration=DEFAULT_WATERING_TIME
+                self.zone, custom_run_duration=DEFAULT_WATERING_TIME.total_seconds()
             )
         elif self.entity_description.key == "auto_watering":
             await self.coordinator.api.resume_zone(self.zone)
