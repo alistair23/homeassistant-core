@@ -277,6 +277,7 @@ class MowerTotalRunningTime(HusqvarnaAutomowerBleEntity, SensorEntity):
     _attr_state_class = SensorStateClass.TOTAL
     _attr_native_unit_of_measurement = UnitOfTime.SECONDS
     _attr_suggested_unit_of_measurement=UnitOfTime.HOURS
+    _attr_entity_category=EntityCategory.DIAGNOSTIC
 
     def __init__(
         self,
@@ -307,6 +308,7 @@ class MowerTotalCuttingTime(HusqvarnaAutomowerBleEntity, SensorEntity):
     _attr_state_class = SensorStateClass.TOTAL
     _attr_native_unit_of_measurement = UnitOfTime.SECONDS
     _attr_suggested_unit_of_measurement=UnitOfTime.HOURS
+    _attr_entity_category=EntityCategory.DIAGNOSTIC
 
     def __init__(
         self,
@@ -337,6 +339,7 @@ class MowerTotalChargingTime(HusqvarnaAutomowerBleEntity, SensorEntity):
     _attr_state_class = SensorStateClass.TOTAL
     _attr_native_unit_of_measurement = UnitOfTime.SECONDS
     _attr_suggested_unit_of_measurement=UnitOfTime.HOURS
+    _attr_entity_category=EntityCategory.DIAGNOSTIC
 
     def __init__(
         self,
@@ -366,6 +369,7 @@ class MowerTotalSearchingTime(HusqvarnaAutomowerBleEntity, SensorEntity):
     _attr_state_class = SensorStateClass.TOTAL
     _attr_native_unit_of_measurement = UnitOfTime.SECONDS
     _attr_suggested_unit_of_measurement=UnitOfTime.HOURS
+    _attr_entity_category=EntityCategory.DIAGNOSTIC
 
     def __init__(
         self,
@@ -392,6 +396,7 @@ class MowerTotalSearchingTime(HusqvarnaAutomowerBleEntity, SensorEntity):
 			
 class MowerNumberOfCollisions(HusqvarnaAutomowerBleEntity, SensorEntity):
     _attr_state_class = SensorStateClass.TOTAL
+    _attr_entity_category=EntityCategory.DIAGNOSTIC
 
     def __init__(
         self,
@@ -418,6 +423,7 @@ class MowerNumberOfCollisions(HusqvarnaAutomowerBleEntity, SensorEntity):
 			
 class MowerNumberOfChargingCycles(HusqvarnaAutomowerBleEntity, SensorEntity):
     _attr_state_class = SensorStateClass.TOTAL
+    _attr_entity_category=EntityCategory.DIAGNOSTIC
 
     def __init__(
         self,
@@ -447,6 +453,7 @@ class MowerCuttingBladeUsageTime(HusqvarnaAutomowerBleEntity, SensorEntity):
     _attr_state_class = SensorStateClass.TOTAL
     _attr_native_unit_of_measurement = UnitOfTime.SECONDS
     _attr_suggested_unit_of_measurement=UnitOfTime.HOURS
+    _attr_entity_category=EntityCategory.DIAGNOSTIC
 
     def __init__(
         self,
