@@ -274,9 +274,9 @@ class MowerNextStart(HusqvarnaAutomowerBleEntity, SensorEntity):
 
 class MowerTotalRunningTime(HusqvarnaAutomowerBleEntity, SensorEntity):
     _attr_device_class = SensorDeviceClass.DURATION
-	_attr_state_class = SensorStateClass.TOTAL
+    _attr_state_class = SensorStateClass.TOTAL
     _attr_native_unit_of_measurement = UnitOfTime.SECONDS
-	_attr_suggested_unit_of_measurement=UnitOfTime.HOURS
+    _attr_suggested_unit_of_measurement=UnitOfTime.HOURS
 
     def __init__(
         self,
@@ -299,5 +299,174 @@ class MowerTotalRunningTime(HusqvarnaAutomowerBleEntity, SensorEntity):
             _LOGGER.debug("skipping as returned none")
         else:
             self._attr_native_value = self.retrieve_value['totalRunningTime']
+            self._attr_available = self._attr_native_value is not None
+            self.async_write_ha_state()
+
+class MowerTotalCuttingTime(HusqvarnaAutomowerBleEntity, SensorEntity):
+    _attr_device_class = SensorDeviceClass.DURATION
+    _attr_state_class = SensorStateClass.TOTAL
+    _attr_native_unit_of_measurement = UnitOfTime.SECONDS
+    _attr_suggested_unit_of_measurement=UnitOfTime.HOURS
+
+    def __init__(
+        self,
+        coordinator: Coordinator,
+        unique_id: str,
+        name: str,
+    ) -> None:
+        """Initialize the lawn mower."""
+        super().__init__(coordinator)
+        self._attr_name = name
+        self._attr_unique_id = unique_id
+
+    @callback
+    def _handle_coordinator_update(self) -> None:
+        """Handle updated data from the coordinator."""
+
+        self.retrieve_value = self.coordinator.data["statuses"]
+        if self.retrieve_value is None:
+            _LOGGER.debug("skipping as returned none")
+        else:
+            self._attr_native_value = self.retrieve_value['totalCuttingTime']
+            self._attr_available = self._attr_native_value is not None
+            self.async_write_ha_state()
+
+
+class MowerTotalChargingTime(HusqvarnaAutomowerBleEntity, SensorEntity):
+    _attr_device_class = SensorDeviceClass.DURATION
+    _attr_state_class = SensorStateClass.TOTAL
+    _attr_native_unit_of_measurement = UnitOfTime.SECONDS
+    _attr_suggested_unit_of_measurement=UnitOfTime.HOURS
+
+    def __init__(
+        self,
+        coordinator: Coordinator,
+        unique_id: str,
+        name: str,
+    ) -> None:
+        """Initialize the lawn mower."""
+        super().__init__(coordinator)
+        self._attr_name = name
+        self._attr_unique_id = unique_id
+
+    @callback
+    def _handle_coordinator_update(self) -> None:
+        """Handle updated data from the coordinator."""
+
+        self.retrieve_value = self.coordinator.data["statuses"]
+        if self.retrieve_value is None:
+            _LOGGER.debug("skipping as returned none")
+        else:
+            self._attr_native_value = self.retrieve_value['totalChargingTime']
+            self._attr_available = self._attr_native_value is not None
+            self.async_write_ha_state()
+			
+class MowerTotalSearchingTime(HusqvarnaAutomowerBleEntity, SensorEntity):
+    _attr_device_class = SensorDeviceClass.DURATION
+    _attr_state_class = SensorStateClass.TOTAL
+    _attr_native_unit_of_measurement = UnitOfTime.SECONDS
+    _attr_suggested_unit_of_measurement=UnitOfTime.HOURS
+
+    def __init__(
+        self,
+        coordinator: Coordinator,
+        unique_id: str,
+        name: str,
+    ) -> None:
+        """Initialize the lawn mower."""
+        super().__init__(coordinator)
+        self._attr_name = name
+        self._attr_unique_id = unique_id
+
+    @callback
+    def _handle_coordinator_update(self) -> None:
+        """Handle updated data from the coordinator."""
+
+        self.retrieve_value = self.coordinator.data["statuses"]
+        if self.retrieve_value is None:
+            _LOGGER.debug("skipping as returned none")
+        else:
+            self._attr_native_value = self.retrieve_value['totalSearchingTime']
+            self._attr_available = self._attr_native_value is not None
+            self.async_write_ha_state()
+			
+class MowerNumberOfCollisions(HusqvarnaAutomowerBleEntity, SensorEntity):
+    _attr_state_class = SensorStateClass.TOTAL
+
+    def __init__(
+        self,
+        coordinator: Coordinator,
+        unique_id: str,
+        name: str,
+    ) -> None:
+        """Initialize the lawn mower."""
+        super().__init__(coordinator)
+        self._attr_name = name
+        self._attr_unique_id = unique_id
+
+    @callback
+    def _handle_coordinator_update(self) -> None:
+        """Handle updated data from the coordinator."""
+
+        self.retrieve_value = self.coordinator.data["statuses"]
+        if self.retrieve_value is None:
+            _LOGGER.debug("skipping as returned none")
+        else:
+            self._attr_native_value = self.retrieve_value['numberOfCollisions']
+            self._attr_available = self._attr_native_value is not None
+            self.async_write_ha_state()
+			
+class MowerNumberOfChargingCycles(HusqvarnaAutomowerBleEntity, SensorEntity):
+    _attr_state_class = SensorStateClass.TOTAL
+
+    def __init__(
+        self,
+        coordinator: Coordinator,
+        unique_id: str,
+        name: str,
+    ) -> None:
+        """Initialize the lawn mower."""
+        super().__init__(coordinator)
+        self._attr_name = name
+        self._attr_unique_id = unique_id
+
+    @callback
+    def _handle_coordinator_update(self) -> None:
+        """Handle updated data from the coordinator."""
+
+        self.retrieve_value = self.coordinator.data["statuses"]
+        if self.retrieve_value is None:
+            _LOGGER.debug("skipping as returned none")
+        else:
+            self._attr_native_value = self.retrieve_value['numberOfChargingCycles']
+            self._attr_available = self._attr_native_value is not None
+            self.async_write_ha_state()
+			
+class MowerCuttingBladeUsageTime(HusqvarnaAutomowerBleEntity, SensorEntity):
+    _attr_device_class = SensorDeviceClass.DURATION
+    _attr_state_class = SensorStateClass.TOTAL
+    _attr_native_unit_of_measurement = UnitOfTime.SECONDS
+    _attr_suggested_unit_of_measurement=UnitOfTime.HOURS
+
+    def __init__(
+        self,
+        coordinator: Coordinator,
+        unique_id: str,
+        name: str,
+    ) -> None:
+        """Initialize the lawn mower."""
+        super().__init__(coordinator)
+        self._attr_name = name
+        self._attr_unique_id = unique_id
+
+    @callback
+    def _handle_coordinator_update(self) -> None:
+        """Handle updated data from the coordinator."""
+
+        self.retrieve_value = self.coordinator.data["statuses"]
+        if self.retrieve_value is None:
+            _LOGGER.debug("skipping as returned none")
+        else:
+            self._attr_native_value = self.retrieve_value['cuttingBladeUsageTime']
             self._attr_available = self._attr_native_value is not None
             self.async_write_ha_state()
